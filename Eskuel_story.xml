@@ -14,18 +14,43 @@ Far beyond the usual networks and databases, in the middle of the Digital Ocean,
 This island was created long ago by the legendary Data Architects, who hid powerful knowledge inside ancient data tables scattered across the island.</text>
         </text-scene>
         <text-scene>
-            <text>You are a young Data Explorer, sent by the Order of Query Masters to investigate the island. Y
-our mission is to uncover lost records, analyze hidden datasets, and restore the ancient database system that once powered the island civilization.</text>
+            <text>You are a young Data Explorer, sent by the Order of Query Masters to investigate the island. Your mission is to uncover lost records, analyze hidden datasets, and restore the ancient database system that once powered the island civilization.</text>
         </text-scene>
         <text-scene>
             <text>For your first journey, you must master three ancient spells:
 
-- MIN() &#x2013; Reveal the smallest value in a dataset
-- MAX() &#x2013; Reveal the greatest value in a dataset
-- ANY &#x2013; Compare a value against a group of values
+- MIN(): Reveal the smallest value in a dataset
+- MAX(): Reveal the greatest value in a dataset
+- ANY(): Compare a value against a group of values
 
 Your adventure begins now!</text>
         </text-scene>
+        <text-scene>
+            <text>Challenge 1 &#x2013; The Oldest Wisdom
+
+You arrive at the Great Library of SQL Island, a quiet place filled with ancient books containing records of the island&#x2019;s past. The Librarian, one of the oldest members of the Order of Query Masters, greets you.</text>
+        </text-scene>
+        <text-scene>
+            <text>Challenge 1 &#x2013; The Oldest Wisdom
+
+ &#x201C;Welcome, young Data Explorer. If you wish to understand SQL Island, you must first learn about the Data Architects who built it.&#x201D;</text>
+        </text-scene>
+        <text-scene>
+            <text>Challenge 1 &#x2013; The Oldest Wisdom
+
+He points to a dusty &#x22;book&#x22; titled &#x60;EXPLORERS&#x60;.
+
+&#x201C;Somewhere in this book are the names of the oldest explorers who ever walked SQL Island.
+If you can find them, you will uncover the greatest wisdom recorded in our archives.&#x201D;</text>
+        </text-scene>
+        <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
+            <text>Search the table &#x60;EXPLORERS&#x60; and find all explorers whose age is the maximum age recorded in the table.</text>
+            <sql-solution>SELECT * FROM EXPLORERS
+WHERE age = (
+    SELECT MAX(age) FROM EXPLORERS
+    );</sql-solution>
+            <sql-placeholder></sql-placeholder>
+        </select-scene>
     </scenes>
     <initial-sql-script>CREATE TABLE EXPLORERS (
     explorer_id INT PRIMARY KEY,
@@ -76,5 +101,6 @@ INSERT INTO EXPLORERS VALUES
 (37,&#x27;Rhea Sunflare&#x27;,31,&#x27;Scout&#x27;,&#x27;2021-12-08&#x27;),
 (38,&#x27;Drake Ironthorn&#x27;,48,&#x27;Architect&#x27;,&#x27;2013-10-02&#x27;),
 (39,&#x27;Nina Cloudrunner&#x27;,26,&#x27;Navigator&#x27;,&#x27;2023-06-23&#x27;),
-(40,&#x27;Galen Brightforge&#x27;,57,&#x27;Master Architect&#x27;,&#x27;2009-08-30&#x27;);</initial-sql-script>
+(40,&#x27;Galen Brightforge&#x27;,61,&#x27;Master Architect&#x27;,&#x27;2009-08-30&#x27;);
+</initial-sql-script>
 </game>
