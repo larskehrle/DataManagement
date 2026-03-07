@@ -7,8 +7,9 @@ CREATE TABLE EXPLORERS (
 );
 
 
+
 INSERT INTO EXPLORERS VALUES
-(1,'Arin Stone',24,'Apprentice','2023-05-12'),
+(1,'Arin Stone',22,'Apprentice','2023-05-12'),
 (2,'Lyra Windfall',31,'Scout','2021-03-08'),
 (3,'Darius Flint',45,'Architect','2015-07-21'),
 (4,'Selene Tide',29,'Navigator','2022-11-02'),
@@ -47,4 +48,5 @@ INSERT INTO EXPLORERS VALUES
 (37,'Rhea Sunflare',31,'Scout','2021-12-08'),
 (38,'Drake Ironthorn',48,'Architect','2013-10-02'),
 (39,'Nina Cloudrunner',26,'Navigator','2023-06-23'),
-(40,'Galen Brightforge',61,'Master Architect','2009-08-30');
+(40,'Galen Brightforge',61,'Master Architect','2009-08-30'),
+(41, 'Eliora Starling', 18, 'Baby', '2025-01-15');

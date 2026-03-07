@@ -51,6 +51,27 @@ WHERE age = (
     );</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
+        <text-scene>
+            <text>Challenge 2 &#x2013; The Youngest Apprentice
+
+After discovering the oldest explorers, the Librarian smiles and flips through the EXPLORERS book again, pointing to the newest entries.</text>
+        </text-scene>
+        <text-scene>
+            <text>&#x201C;Some of our newest members are even babies, younger than the apprentices.
+But your task is to find the youngest apprentice. Knowing who holds this title will help you understand how the Order continues its legacy.&#x201D;</text>
+        </text-scene>
+        <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
+            <text>Search the EXPLORERS table and find the explorers with the minimum age among those with the rank Apprentice.</text>
+            <sql-solution>WITH Apprentices AS (
+    SELECT *
+    FROM EXPLORERS
+    WHERE rank = &#x27;Apprentice&#x27;
+)
+SELECT *
+FROM Apprentices
+WHERE age = (SELECT MIN(age) FROM Apprentices);</sql-solution>
+            <sql-placeholder></sql-placeholder>
+        </select-scene>
     </scenes>
     <initial-sql-script>CREATE TABLE EXPLORERS (
     explorer_id INT PRIMARY KEY,
@@ -61,8 +82,9 @@ WHERE age = (
 );
 
 
+
 INSERT INTO EXPLORERS VALUES
-(1,&#x27;Arin Stone&#x27;,24,&#x27;Apprentice&#x27;,&#x27;2023-05-12&#x27;),
+(1,&#x27;Arin Stone&#x27;,22,&#x27;Apprentice&#x27;,&#x27;2023-05-12&#x27;),
 (2,&#x27;Lyra Windfall&#x27;,31,&#x27;Scout&#x27;,&#x27;2021-03-08&#x27;),
 (3,&#x27;Darius Flint&#x27;,45,&#x27;Architect&#x27;,&#x27;2015-07-21&#x27;),
 (4,&#x27;Selene Tide&#x27;,29,&#x27;Navigator&#x27;,&#x27;2022-11-02&#x27;),
@@ -101,6 +123,6 @@ INSERT INTO EXPLORERS VALUES
 (37,&#x27;Rhea Sunflare&#x27;,31,&#x27;Scout&#x27;,&#x27;2021-12-08&#x27;),
 (38,&#x27;Drake Ironthorn&#x27;,48,&#x27;Architect&#x27;,&#x27;2013-10-02&#x27;),
 (39,&#x27;Nina Cloudrunner&#x27;,26,&#x27;Navigator&#x27;,&#x27;2023-06-23&#x27;),
-(40,&#x27;Galen Brightforge&#x27;,61,&#x27;Master Architect&#x27;,&#x27;2009-08-30&#x27;);
-</initial-sql-script>
+(40,&#x27;Galen Brightforge&#x27;,61,&#x27;Master Architect&#x27;,&#x27;2009-08-30&#x27;),
+(41, &#x27;Eliora Starling&#x27;, 18, &#x27;Baby&#x27;, &#x27;2025-01-15&#x27;);</initial-sql-script>
 </game>
