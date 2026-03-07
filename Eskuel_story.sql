@@ -47,4 +47,4 @@ INSERT INTO EXPLORERS VALUES
 (37,'Rhea Sunflare',31,'Scout','2021-12-08'),
 (38,'Drake Ironthorn',48,'Architect','2013-10-02'),
 (39,'Nina Cloudrunner',26,'Navigator','2023-06-23'),
-(40,'Galen Brightforge',57,'Master Architect','2009-08-30');
+(40,'Galen Brightforge',61,'Master Architect','2009-08-30');
