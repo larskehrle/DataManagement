@@ -6,6 +6,21 @@ CREATE TABLE EXPLORERS (
     join_date DATE
 );
 
+CREATE TABLE MISSIONS (
+    mission_id INT PRIMARY KEY,
+    mission_name VARCHAR(50),
+    difficulty INT
+);
+
+CREATE TABLE MISSION_PARTICIPATION (
+    explorer_id INT,
+    mission_id INT,
+    outcome VARCHAR(20),   -- 'Success' or 'Failure'
+    score INT,             -- performance score (0–100)
+    PRIMARY KEY (explorer_id, mission_id),
+    FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id),
+    FOREIGN KEY (mission_id) REFERENCES MISSIONS(mission_id)
+);
 
 
 INSERT INTO EXPLORERS VALUES
@@ -51,3 +66,25 @@ INSERT INTO EXPLORERS VALUES
 (40,'Galen Brightforge',61,'Master Architect','2009-08-30'),
 (41, 'Eliora Starling', 18, 'Baby', '2025-01-15'),
 (42,'Iris Coldblood',35,'Navigator','2005-04-22');
+
+
+INSERT INTO MISSIONS VALUES
+(1,'Forest Mapping',3),
+(2,'Mountain Survey',5),
+(3,'Volcano Study',9),
+(4,'Ancient Ruins',10),
+(5,'River Analysis',4),
+(6,'Desert Crossing',8);
+
+INSERT INTO MISSION_PARTICIPATION VALUES
+(2,1,'Success',85),
+(3,2,'Success',78),
+(5,3,'Failure',60),
+(8,4,'Success',92),
+(22,4,'Success',95),
+(14,6,'Success',70),
+(27,2,'Success',80),
+(31,5,'Success',90),
+(37,1,'Success',87),
+(10,4,'Failure',2),
+(42,4,'Success',42);
