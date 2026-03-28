@@ -141,8 +141,7 @@ AND age &#x3C;= (
             <text>Challenge 5 - The Mirror of Equality
 After leaving the Hall of Balance, you enter a quiet circular chamber illuminated by a floating crystal mirror. 
 
-The chamber is known among the Order as &#x22;The Mirror of Equality&#x22;.
-</text>
+The chamber is known among the Order as &#x22;The Mirror of Equality&#x22;.</text>
         </text-scene>
         <text-scene>
             <text>As you approach, glowing runes appear on the mirror:
@@ -171,6 +170,51 @@ WHERE age = (
         <text-scene>
             <text>The mirror glows brightly and slowly rotates, revealing a hidden passage deeper into the island.</text>
         </text-scene>
+        <text-scene>
+            <text>Challenge 6 - The Trial of Extremes
+
+You enter a chamber filled with floating data shards, each representing an expedition.
+
+As you move closer, the shards reorganize themselves into a structured form.
+An ancient terminal hums to life.</text>
+        </text-scene>
+        <text-scene>
+            <text>This time, the system reveals not one&#x2026; but two connected tables:
+
+- MISSIONS: the challenges created by the Data Architects
+- MISSION_PARTICIPATION: records of which explorers took part, and how they performed</text>
+        </text-scene>
+        <text-scene>
+            <text>A deep voice echoes through the chamber:
+
+&#x22;Only those who have faced the greatest challenges&#x2026;
+and performed beyond the weakest efforts&#x2026; may proceed&#x22;</text>
+        </text-scene>
+        <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
+            <text>Use the tables EXPLORERS, MISSIONS, and MISSION_PARTICIPATION to find all explorers who:
+
+- Participated in a mission with the maximum difficulty.
+- AND achieved a score greater than ANY score from missions with difficulty 5 or lower.</text>
+            <sql-solution>WITH MaxDifficulty AS (
+    SELECT MAX(difficulty) AS max_diff
+    FROM MISSIONS
+),
+LowDifficultyScores AS (
+    SELECT mp.score
+    FROM MISSION_PARTICIPATION mp
+    JOIN MISSIONS m ON mp.mission_id = m.mission_id
+    WHERE m.difficulty &#x3C;= 5
+)
+SELECT e.*
+FROM EXPLORERS e
+JOIN MISSION_PARTICIPATION mp 
+    ON e.explorer_id = mp.explorer_id
+JOIN MISSIONS m 
+    ON mp.mission_id = m.mission_id
+WHERE m.difficulty = (SELECT max_diff FROM MaxDifficulty)
+AND mp.score &#x3E; ANY (SELECT score FROM LowDifficultyScores);</sql-solution>
+            <sql-placeholder></sql-placeholder>
+        </select-scene>
     </scenes>
     <initial-sql-script>CREATE TABLE EXPLORERS (
     explorer_id INT PRIMARY KEY,
@@ -180,6 +224,21 @@ WHERE age = (
     join_date DATE
 );
 
+CREATE TABLE MISSIONS (
+    mission_id INT PRIMARY KEY,
+    mission_name VARCHAR(50),
+    difficulty INT
+);
+
+CREATE TABLE MISSION_PARTICIPATION (
+    explorer_id INT,
+    mission_id INT,
+    outcome VARCHAR(20),   -- &#x27;Success&#x27; or &#x27;Failure&#x27;
+    score INT,             -- performance score (0&#x2013;100)
+    PRIMARY KEY (explorer_id, mission_id),
+    FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id),
+    FOREIGN KEY (mission_id) REFERENCES MISSIONS(mission_id)
+);
 
 
 INSERT INTO EXPLORERS VALUES
@@ -224,5 +283,27 @@ INSERT INTO EXPLORERS VALUES
 (39,&#x27;Nina Cloudrunner&#x27;,26,&#x27;Navigator&#x27;,&#x27;2023-06-23&#x27;),
 (40,&#x27;Galen Brightforge&#x27;,61,&#x27;Master Architect&#x27;,&#x27;2009-08-30&#x27;),
 (41, &#x27;Eliora Starling&#x27;, 18, &#x27;Baby&#x27;, &#x27;2025-01-15&#x27;),
-(42,&#x27;Iris Coldblood&#x27;,35,&#x27;Navigator&#x27;,&#x27;2005-04-22&#x27;);</initial-sql-script>
+(42,&#x27;Iris Coldblood&#x27;,35,&#x27;Navigator&#x27;,&#x27;2005-04-22&#x27;);
+
+
+INSERT INTO MISSIONS VALUES
+(1,&#x27;Forest Mapping&#x27;,3),
+(2,&#x27;Mountain Survey&#x27;,5),
+(3,&#x27;Volcano Study&#x27;,9),
+(4,&#x27;Ancient Ruins&#x27;,10),
+(5,&#x27;River Analysis&#x27;,4),
+(6,&#x27;Desert Crossing&#x27;,8);
+
+INSERT INTO MISSION_PARTICIPATION VALUES
+(2,1,&#x27;Success&#x27;,85),
+(3,2,&#x27;Success&#x27;,78),
+(5,3,&#x27;Failure&#x27;,60),
+(8,4,&#x27;Success&#x27;,92),
+(22,4,&#x27;Success&#x27;,95),
+(14,6,&#x27;Success&#x27;,70),
+(27,2,&#x27;Success&#x27;,80),
+(31,5,&#x27;Success&#x27;,90),
+(37,1,&#x27;Success&#x27;,87),
+(10,4,&#x27;Failure&#x27;,2),
+(42,4,&#x27;Success&#x27;,42);</initial-sql-script>
 </game>
