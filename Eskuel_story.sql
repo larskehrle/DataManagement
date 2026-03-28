@@ -49,4 +49,5 @@ INSERT INTO EXPLORERS VALUES
 (38,'Drake Ironthorn',48,'Architect','2013-10-02'),
 (39,'Nina Cloudrunner',26,'Navigator','2023-06-23'),
 (40,'Galen Brightforge',61,'Master Architect','2009-08-30'),
-(41, 'Eliora Starling', 18, 'Baby', '2025-01-15');
+(41, 'Eliora Starling', 18, 'Baby', '2025-01-15'),
+(42,'Iris Coldblood',35,'Navigator','2005-04-22');

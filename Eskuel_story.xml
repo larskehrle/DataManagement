@@ -72,6 +72,105 @@ FROM Apprentices
 WHERE age = (SELECT MIN(age) FROM Apprentices);</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
+        <text-scene>
+            <text>Challenge 3 - The Gateway of Comparison
+
+Leaving the Great Library behind, you continue deeper into SQL Island.
+The stone path leads you to an ancient structure known as the Gateway of Comparison. The gate is guarded by a silent stone statue of one of the original Data Architects.</text>
+        </text-scene>
+        <text-scene>
+            <text>As you approach, glowing runes appear on the gate.
+
+&#x22;Only explorers who have proven themselves stronger than the apprentices may pass.&#x22;</text>
+        </text-scene>
+        <text-scene>
+            <text>A stone tablet emerges from the ground displaying records from the EXPLORERS table. The message continues:
+
+&#x201C;Find all explorers whose age is greater than any apprentice of the Order.
+Those who surpass even the youngest apprentices may step through the gateway.&#x201D;</text>
+        </text-scene>
+        <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
+            <text>To unlock the gate, you must compare explorers against the ages of all apprentices using one of the ancient SQL spells.</text>
+            <sql-solution>SELECT *
+FROM EXPLORERS
+WHERE age &#x3E; ANY (
+    SELECT age
+    FROM EXPLORERS
+    WHERE rank = &#x27;Apprentice&#x27;
+);</sql-solution>
+            <sql-placeholder></sql-placeholder>
+        </select-scene>
+        <text-scene>
+            <text>Challenge 4 - The Hall of Balance
+
+After passing through the Gateway of Comparison, you enter a hidden chamber deep beneath SQL Island: the Hall of Balance.
+
+Two ancient crystals float above a stone pedestal. One glows with the energy of the youngest Scout, the other with the wisdom of the oldest Scout.</text>
+        </text-scene>
+        <text-scene>
+            <text>An inscription appears on the wall:
+
+&#x201C;Only those whose age lies within the balance of the Scouts may continue.
+Not younger than the youngest. Not older than the oldest.&#x201D;
+
+The pedestal reveals records from the EXPLORERS table.</text>
+        </text-scene>
+        <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
+            <text>Your task is to find all explorers whose age lies between the minimum and maximum age of all Scouts, including the boundary ages themselves.
+
+This means you must first discover:
+     - The youngest Scout
+     - The oldest Scout
+
+Then find every explorer whose age falls within that full range.</text>
+            <sql-solution>SELECT *
+FROM EXPLORERS
+WHERE age &#x3E;= (
+    SELECT MIN(age)
+    FROM EXPLORERS
+    WHERE rank = &#x27;Scout&#x27;
+)
+AND age &#x3C;= (
+    SELECT MAX(age)
+    FROM EXPLORERS
+    WHERE rank = &#x27;Scout&#x27;
+);</sql-solution>
+            <sql-placeholder></sql-placeholder>
+        </select-scene>
+        <text-scene>
+            <text>Challenge 5 - The Mirror of Equality
+After leaving the Hall of Balance, you enter a quiet circular chamber illuminated by a floating crystal mirror. 
+
+The chamber is known among the Order as &#x22;The Mirror of Equality&#x22;.
+</text>
+        </text-scene>
+        <text-scene>
+            <text>As you approach, glowing runes appear on the mirror:
+
+&#x201C;Balance alone is not enough.  
+Only those whose wisdom equals the greatest among the Scouts  
+ may continue deeper into SQL Island.&#x201D;</text>
+        </text-scene>
+        <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
+            <text>A stone console appears and displays records from the &#x60;EXPLORERS&#x60; table.
+
+Your task is to determine the &#x22;oldest Scout&#x22; and find all explorers whose age is equal to that value.
+
+This means you must:
+     - Determine the maximum age among all Scouts
+     - Find every explorer whose age equals that value</text>
+            <sql-solution>SELECT *
+FROM EXPLORERS
+WHERE age = (
+    SELECT MAX(age)
+    FROM EXPLORERS
+    WHERE rank = &#x27;Scout&#x27;
+);</sql-solution>
+            <sql-placeholder></sql-placeholder>
+        </select-scene>
+        <text-scene>
+            <text>The mirror glows brightly and slowly rotates, revealing a hidden passage deeper into the island.</text>
+        </text-scene>
     </scenes>
     <initial-sql-script>CREATE TABLE EXPLORERS (
     explorer_id INT PRIMARY KEY,
@@ -124,5 +223,6 @@ INSERT INTO EXPLORERS VALUES
 (38,&#x27;Drake Ironthorn&#x27;,48,&#x27;Architect&#x27;,&#x27;2013-10-02&#x27;),
 (39,&#x27;Nina Cloudrunner&#x27;,26,&#x27;Navigator&#x27;,&#x27;2023-06-23&#x27;),
 (40,&#x27;Galen Brightforge&#x27;,61,&#x27;Master Architect&#x27;,&#x27;2009-08-30&#x27;),
-(41, &#x27;Eliora Starling&#x27;, 18, &#x27;Baby&#x27;, &#x27;2025-01-15&#x27;);</initial-sql-script>
+(41, &#x27;Eliora Starling&#x27;, 18, &#x27;Baby&#x27;, &#x27;2025-01-15&#x27;),
+(42,&#x27;Iris Coldblood&#x27;,35,&#x27;Navigator&#x27;,&#x27;2005-04-22&#x27;);</initial-sql-script>
 </game>
