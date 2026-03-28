@@ -6,21 +6,12 @@ CREATE TABLE EXPLORERS (
     join_date DATE
 );
 
-CREATE TABLE MISSIONS (
-    mission_id INT PRIMARY KEY,
-    mission_name VARCHAR(50),
-    difficulty INT
-);
-
-CREATE TABLE MISSION_PARTICIPATION (
-    explorer_id INT,
-    mission_id INT,
-    outcome VARCHAR(20),   -- 'Success' or 'Failure'
-    score INT,             -- performance score (0–100)
-    PRIMARY KEY (explorer_id, mission_id),
-    FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id),
-    FOREIGN KEY (mission_id) REFERENCES MISSIONS(mission_id)
-);
+CREATE TABLE MISSION_LOGS ( 
+  log_id INT PRIMARY KEY, 
+  explorer_id INT, 
+  mission_date DATE, 
+  power_draw INT, anomalous BOOLEAN, 
+  FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id) );
 
 
 INSERT INTO EXPLORERS VALUES
@@ -68,23 +59,21 @@ INSERT INTO EXPLORERS VALUES
 (42,'Iris Coldblood',35,'Navigator','2005-04-22');
 
 
-INSERT INTO MISSIONS VALUES
-(1,'Forest Mapping',3),
-(2,'Mountain Survey',5),
-(3,'Volcano Study',9),
-(4,'Ancient Ruins',10),
-(5,'River Analysis',4),
-(6,'Desert Crossing',8);
-
-INSERT INTO MISSION_PARTICIPATION VALUES
-(2,1,'Success',85),
-(3,2,'Success',78),
-(5,3,'Failure',60),
-(8,4,'Success',92),
-(22,4,'Success',95),
-(14,6,'Success',70),
-(27,2,'Success',80),
-(31,5,'Success',90),
-(37,1,'Success',87),
-(10,4,'Failure',2),
-(42,4,'Success',42);
+INSERT INTO MISSION_LOGS (log_id, explorer_id, mission_date, power_draw, anomalous) VALUES 
+(1, 2, CURRENT_DATE, 120, FALSE), 
+(2, 3, CURRENT_DATE, 180, FALSE), 
+(3, 4, CURRENT_DATE, 140, FALSE), 
+(4, 5, CURRENT_DATE, 200, FALSE), 
+(5, 30, CURRENT_DATE, 450, TRUE), 
+(6, 8, CURRENT_DATE, 470, TRUE), 
+(7, 8, CURRENT_DATE, 490, TRUE), 
+(8, 6, CURRENT_DATE, 300, FALSE), 
+(9, 7, CURRENT_DATE, 320, TRUE), 
+(10, 23, CURRENT_DATE, 520, TRUE), 
+(11, 10, CURRENT_DATE, 280, FALSE), 
+(12, 8, CURRENT_DATE, 500, TRUE), 
+(13, 12, CURRENT_DATE, 260, FALSE), 
+(14, 8, CURRENT_DATE, 650, TRUE), 
+(15, 14, CURRENT_DATE, 290, FALSE), 
+(16, 8, CURRENT_DATE, 610, FALSE), 
+(17, 30, CURRENT_DATE, 560, TRUE);
