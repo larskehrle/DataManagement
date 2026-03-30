@@ -10,8 +10,10 @@ CREATE TABLE MISSION_LOGS (
   log_id INT PRIMARY KEY, 
   explorer_id INT, 
   mission_date DATE, 
-  power_draw INT, anomalous BOOLEAN, 
-  FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id) );
+  power_draw INT, 
+  anomalous BOOLEAN, 
+  FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id)
+);
 
 
 INSERT INTO EXPLORERS VALUES
