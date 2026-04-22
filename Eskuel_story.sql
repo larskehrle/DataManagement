@@ -1,22 +1,22 @@
-CREATE TABLE EXPLORERS (
-    explorer_id INT PRIMARY KEY,
-    name VARCHAR(50),
-    age INT,
-    rank VARCHAR(30),
-    join_date DATE
+create table explorers (
+    explorer_id int primary key,
+    name varchar(50),
+    age int,
+    rank varchar(30),
+    join_date date
 );
 
-CREATE TABLE MISSION_LOGS ( 
-  log_id INT PRIMARY KEY, 
-  explorer_id INT, 
-  mission_date DATE, 
-  power_draw INT, 
-  anomalous BOOLEAN, 
-  FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id)
+create table mission_logs ( 
+  log_id int primary key, 
+  explorer_id int, 
+  mission_date date, 
+  power_draw int, 
+  anomalous boolean, 
+  foreign key (explorer_id) references explorers(explorer_id)
 );
 
 
-INSERT INTO EXPLORERS VALUES
+insert into explorers values
 (1,'Arin Stone',22,'Apprentice','2023-05-12'),
 (2,'Lyra Windfall',31,'Scout','2021-03-08'),
 (3,'Darius Flint',45,'Architect','2015-07-21'),
@@ -61,7 +61,7 @@ INSERT INTO EXPLORERS VALUES
 (42,'Iris Coldblood',35,'Navigator','2005-04-22');
 
 
-INSERT INTO MISSION_LOGS (log_id, explorer_id, mission_date, power_draw, anomalous) VALUES 
+insert into mission_logs (log_id, explorer_id, mission_date, power_draw, anomalous) values 
 (1, 2, CURRENT_DATE, 120, FALSE), 
 (2, 3, CURRENT_DATE, 180, FALSE), 
 (3, 4, CURRENT_DATE, 140, FALSE), 
