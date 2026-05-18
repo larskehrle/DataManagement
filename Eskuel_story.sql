@@ -1,5 +1,5 @@
 create table explorers (
-    explorer_id int primary key,
+    id int primary key,
     name varchar(50),
     age int,
     rank varchar(30),
@@ -12,7 +12,7 @@ create table mission_logs (
   mission_date date, 
   power_draw int, 
   anomalous boolean, 
-  foreign key (explorer_id) references explorers(explorer_id)
+  foreign key (explorer_id) references explorers(id)
 );
 
 

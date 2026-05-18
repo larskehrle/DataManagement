@@ -21,9 +21,10 @@
             <text>The Data Architects left behind advanced trials that must be completed before any explorer can escape. These trials introduce deeper concepts of data analysis and comparison &#x2014; powerful MIN(), MAX(), and ANY.</text>
         </text-scene>
         <text-scene>
-            <text>MIN() &#x2013; Reveal the smallest value in a dataset
-MAX() &#x2013; Reveal the greatest value in a dataset
-ANY &#x2013; Compare a value against a group of values
+            <text>MIN(): Reveal the smallest value in a dataset
+MAX(): Reveal the greatest value in a dataset
+ANY: Compare a value against a group of values
+
 Your adventure begins now!</text>
         </text-scene>
         <text-scene>
@@ -35,19 +36,27 @@ You arrive at the Great Library of SQL Island, a quiet place filled with ancient
             <text>&#x201C;Welcome, young Data Explorer. If you wish to understand SQL Island, you must first learn about the Data Architects who built it.&#x201D;</text>
         </text-scene>
         <text-scene>
-            <text>He points to a dusty &#x22;book&#x22; titled &#x60;EXPLORERS&#x60;: &#x201C;Somewhere in this book are the names of the oldest explorers who ever walked SQL Island. If you can find them, you will uncover the greatest wisdom recorded in our archives.&#x201D;</text>
+            <text>He points to a dusty &#x22;book&#x22; titled &#x60;explorers&#x60;: 
+&#x201C;Somewhere in this book are the names of the oldest explorers who ever walked SQL Island. If you can find them, you will uncover the greatest wisdom recorded in our archives.&#x201D;</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
             <text>You need to &#x22;open&#x22; the &#x22;book&#x22; in order to inspect  records of the island&#x2019;s past. 
-Hint: Display the complete table &#x60;EXPLORERS&#x60;</text>
-            <sql-solution>SELECT * FROM EXPLORERS</sql-solution>
+Hint: Display the complete table &#x60;explorers&#x60;</text>
+            <sql-solution>SELECT * FROM explorers;</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
+        <text-scene>
+            <text>Good job!
+
+Now look for the oldest explorers of SQL Island.</text>
+        </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint: Search the table &#x60;EXPLORERS&#x60; and find all explorers whose age is the maximum age recorded in the table.</text>
-            <sql-solution>SELECT * FROM EXPLORERS
+            <text>Which explorers in the book (explorers) have the highest recorded age ?
+
+Hint: Use the ancient spell MAX() to determine the highest age.</text>
+            <sql-solution>SELECT * FROM explorers
 WHERE age = (
-    SELECT MAX(age) FROM EXPLORERS
+    SELECT MAX(age) FROM explorers
     );</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
@@ -57,21 +66,21 @@ WHERE age = (
         <text-scene>
             <text>Challenge 2 &#x2013; The Youngest Apprentice
 
-After discovering the oldest explorers, the Librarian smiles and flips through the EXPLORERS book again, pointing to the newest entries.</text>
+After discovering the oldest explorers, the Librarian smiles and flips through the &#x60;explorers&#x60; book again, pointing to the newest entries.</text>
         </text-scene>
         <text-scene>
             <text>&#x201C;Some of our newest members are even babies, younger than the apprentices. But your task is to find the youngest apprentice. Knowing who holds this title will help you understand how the Order continues its legacy.&#x201D;</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint: Search the EXPLORERS table and find the explorers with the minimum age among those with the rank Apprentice.</text>
-            <sql-solution>WITH Apprentices AS (
+            <text>Hint: Search the &#x60;explorers&#x60; table and find the explorers with the minimum age among those with the rank Apprentice.</text>
+            <sql-solution>WITH apprentices AS (
     SELECT *
-    FROM EXPLORERS
+    FROM explorers
     WHERE rank = &#x27;Apprentice&#x27;
 )
 SELECT *
-FROM Apprentices
-WHERE age = (SELECT MIN(age) FROM Apprentices);</sql-solution>
+FROM apprentices
+WHERE age = (SELECT MIN(age) FROM apprentices);</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
         <text-scene>
@@ -86,49 +95,55 @@ The stone path leads you to an ancient structure known as the Gateway of Compari
         <text-scene>
             <text>As you approach, glowing runes appear on the gate.
 
-&#x22;Only explorers who have proven themselves stronger than the apprentices may pass.&#x22;</text>
-        </text-scene>
-        <text-scene>
-            <text>A stone tablet emerges from the ground displaying records from the EXPLORERS table. The message continues:
-
-&#x201C;Find all explorers whose age is greater than any apprentice of the Order. Those who surpass even the youngest apprentices may step through the gateway.&#x201D;</text>
+A stone tablet rises from the ground, revealing records from the &#x60;explorers&#x60; book with a question:</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint: To unlock the gate, you must compare explorers against the ages of all apprentices using one of the ancient SQL spells.</text>
+            <text>Which explorers are older than the youngest Apprentice?
+
+Hint: 
+1. Use the spell &#x60;MIN()&#x60; to discover the youngest Apprentice before comparing ages.
+2. Exclude Apprentices themselves from the final result</text>
             <sql-solution>SELECT *
-FROM EXPLORERS
-WHERE age &#x3E; ANY (
-    SELECT age
-    FROM EXPLORERS
+FROM explorers
+WHERE age &#x3E; (
+    SELECT MIN(age)
+    FROM explorers
     WHERE rank = &#x27;Apprentice&#x27;
-);</sql-solution>
+)
+AND rank != &#x27;Apprentice&#x27;;</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
         <text-scene>
-            <text>Great work! Your query skills are getting sharper. You learned how to compare a value against multiple options using ANY. This makes filtering across several categories easier.</text>
+            <text>Great work! Your query skills are getting sharper. You&#x2019;ve learned how to combine filtering with MIN() to compare values against a dynamically computed baseline.</text>
         </text-scene>
         <text-scene>
             <text>Challenge 4 - The Hall of Balance
 
-After passing through the Gateway of Comparison, you enter a hidden chamber deep beneath the Island: the Hall of Balance. Two ancient crystals float above a stone pedestal. One glows with the energy of the youngest Scout, the other with the wisdom of the oldest Scout.</text>
+After passing through the Gateway of Comparison, you enter a hidden chamber deep beneath the Island: the Hall of Balance. 
+Two ancient crystals float above a stone pedestal. One glows with the energy of the youngest Scout, the other with the wisdom of the oldest Scout.</text>
         </text-scene>
         <text-scene>
             <text>An inscription appears on the wall: &#x201C;Only those whose age lies within the balance of the Scouts may continue. Not younger than the youngest. Not older than the oldest.&#x201D;
-The pedestal reveals records from the EXPLORERS table.</text>
+The pedestal reveals records from the &#x60;explorers&#x60; table.</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint: Your task is to find all explorers whose age lies between the minimum and maximum age of all Scouts, including the boundary ages themselves.
-This means you must first discover the youngest Scout and the oldest Scout, then find every explorer whose age falls within that full range.</text>
+            <text>Which explorers in the book (&#x60;explorers&#x60;) have an age between the youngest and oldest Scouts (including both)?
+
+Hint: 
+- Use MIN() to find the youngest Scout
+- Use MAX() to find the oldest Scout
+- Then compare all explorers against that range.
+- For full correctness, make sure the boundary ages are included.</text>
             <sql-solution>SELECT *
-FROM EXPLORERS
+FROM explorers
 WHERE age &#x3E;= (
     SELECT MIN(age)
-    FROM EXPLORERS
+    FROM explorers
     WHERE rank = &#x27;Scout&#x27;
 )
 AND age &#x3C;= (
     SELECT MAX(age)
-    FROM EXPLORERS
+    FROM explorers
     WHERE rank = &#x27;Scout&#x27;
 );</sql-solution>
             <sql-placeholder></sql-placeholder>
@@ -137,31 +152,39 @@ AND age &#x3C;= (
             <text>Excellent! You&#x2019;ve passed another trial of logic.  You learned how to define a range using MIN() and MAX() and filter values within it. This helps analyze data within boundaries.</text>
         </text-scene>
         <text-scene>
-            <text>Challenge 5 - The Mirror of Equality
-After leaving the Hall of Balance, you enter a quiet circular chamber illuminated by a floating crystal mirror. 
-The chamber is known among the Order as &#x22;The Mirror of Equality&#x22;.</text>
+            <text>Challenge 5 - The Echoes of the Veterans
+Beyond the Gateway of Comparison, you arrive at a vast stone arena lined with ancient banners.
+This place is known as &#x22;The Echoes of the Veterans&#x22;.</text>
         </text-scene>
         <text-scene>
-            <text>As you approach, glowing runes appear on the mirror:
+            <text>At the center of the arena stand statues of legendary explorers who once guided SQL Island through its darkest age. Their ranks were passed down through generations of adventurers.
 
-&#x201C;Balance alone is not enough. Only those whose wisdom equals the greatest among the Scouts may continue deeper into SQL Island.&#x201D;</text>
+As you approach, glowing runes ignite across the floor:</text>
+        </text-scene>
+        <text-scene>
+            <text>&#x201C;The wisdom of the veterans lives on through those who share their titles.
+Find the next generation who carry the same ranks as the elders.&#x201D;
+
+A stone console rises from the ground, displaying records from the &#x60;explorer&#x60; book.</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint:  A stone console appears and displays records from the &#x60;EXPLORERS&#x60; table. Your task is to determine the &#x22;oldest Scout&#x22; and find all explorers whose age is equal to that value.
-This means you must:
-     - Determine the maximum age among all Scouts
-     - Find every explorer whose age equals that value</text>
+            <text>Which non-veteran explorers (age under 60) share a rank that is also held by at least one veteran explorer (age 60 or older)?
+
+Hint: Use the spell &#x60;ANY&#x60; to compare ranks against a set of veteran ranks.
+1. Find the ranks held by veteran explorers.
+2. Return younger explorers who share one of those ranks.</text>
             <sql-solution>SELECT *
-FROM EXPLORERS
-WHERE age = (
-    SELECT MAX(age)
-    FROM EXPLORERS
-    WHERE rank = &#x27;Scout&#x27;
-);</sql-solution>
+FROM explorers
+WHERE rank = ANY (
+    SELECT DISTINCT rank
+    FROM explorers
+    WHERE age &#x3E;= 60
+)
+AND age &#x3C; 60;</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
         <text-scene>
-            <text>Nicely done! You&#x2019;re reading the data with precision. You reinforced how to combine filtering with MAX() to find the top value inside a specific group. This is useful for targeted comparisons.</text>
+            <text>Nicely done! You have now mastered how to compare values against a dynamic set returned by a subquery using the ancient spell &#x60;ANY&#x60;.</text>
         </text-scene>
         <text-scene>
             <text>The mirror glows brightly and slowly rotates, revealing a hidden passage deeper into the island.</text>
@@ -169,17 +192,19 @@ WHERE age = (
         <text-scene>
             <text>Challenge 6 - The Architects&#x2019; Ledger
 
-Ahead of you are a set of stairs. Descending deeper, you discover a secret chamber known as the Core Chamber of the Architects. Here, the island is no longer fragmented into trials or puzzles, it is a place where the Order of Query Masters regulates data.</text>
+Ahead of you are a set of stairs. Descending deeper, you discover a secret chamber known as the Core Chamber of the Architects. 
+Here, the island is no longer fragmented into trials or puzzles, it is a place where the Order of Query Masters regulates data.</text>
         </text-scene>
         <text-scene>
-            <text>In front of you a massive stone table covered in glowing inscriptions. You see that the glowing inscriptions on the table show new records - Mission Logs (&#x60;MISSION_LOGS&#x60;).
+            <text>In front of you a massive stone table covered in glowing inscriptions. You see that the glowing inscriptions on the table show new records - Mission Logs (&#x60;mission_logs&#x60;).
 - Each query executed by explorers produces a measurable power draw (&#x60;power_draw&#x60;).
 - Some executions are safe, but others produce unstable spikes that the system flags as anomalous.</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
             <text>First, you need to read this notes to understand what is related and what is not. 
-Hint: Display the complete table &#x60;MISSION_LOGS&#x60;</text>
-            <sql-solution>SELECT * FROM MISSION_LOGS</sql-solution>
+
+Display the complete table &#x60;mission_logs&#x60;</text>
+            <sql-solution>SELECT * FROM mission_logs;</sql-solution>
             <sql-placeholder></sql-placeholder>
         </select-scene>
         <text-scene>
@@ -191,23 +216,32 @@ This maybe the real reason of your plane&#x2019;s crash!</text>
             <text>You need to find it out and identify which explorers are responsible for the strongest execution bursts. The idea is not just to look at single logs, but to understand each explorer&#x2019;s peak behaviour across all their activity.</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint:  Use the tables EXPLORERS and MISSION_LOGS to find all explorers whose single strongest execution is more extreme than at least one recorded anomaly</text>
-            <sql-solution>WITH ExplorerPeaks AS ( 
+            <text>Which explorers in the &#x60;explorers&#x60; book have performed at least one mission (logged in &#x60;mission_logs&#x60; book) whose power_draw exceeded any anomalous power_draw?
+
+Hint:
+- Identify the highest power usage per explorer using CTE    
+- Compare those values against all anomalous readings</text>
+            <sql-solution>WITH explorer_peaks AS ( 
     SELECT 
   &#x9;&#x9;explorer_id, 
         MAX(power_draw) AS max_power 
-    FROM MISSION_LOGS 
+    FROM mission_logs 
     GROUP BY explorer_id 
 ) 
 SELECT ep.*, e.name, e.rank 
-FROM ExplorerPeaks ep 
-JOIN EXPLORERS e ON ep.explorer_id = e.explorer_id 
+FROM explorer_peaks ep 
+JOIN explorers e ON ep.explorer_id = e.id 
 WHERE ep.max_power &#x3E; ANY ( 
     SELECT power_draw 
-    FROM MISSION_LOGS 
+    FROM mission_logs 
     WHERE anomalous = TRUE 
-);</sql-solution>
-            <sql-placeholder></sql-placeholder>
+); </sql-solution>
+            <sql-placeholder>WITH explorer_peaks AS ( 
+    ...
+) 
+SELECT ep.*, e.name, e.rank 
+FROM explorer_peaks ep 
+JOIN explorers e ON ...</sql-placeholder>
         </select-scene>
         <text-scene>
             <text>Solid progress! You&#x2019;re moving deeper into the system.  
@@ -220,25 +254,34 @@ But the system does not react. There is no restart.</text>
         <text-scene>
             <text>Challenge 7 - The Black Box Revelation
 
-Then a new message appears on the stone surface: &#x201C;Even if those peak values are considered, the total still does not exceed the system&#x2019;s global safety threshold. Something is still missing. Some executions that look normal can be actually dangerous, but were never marked as anomalous.</text>
+A new message appears on the stone surface: 
+&#x201C;Even if those peak values are considered, the total still does not exceed the system&#x2019;s global safety threshold. Something is still missing. Some spell that look normal can be actually dangerous, but were never marked as anomalous.&#x201D;</text>
         </text-scene>
         <select-scene is-row-order-relevant="false" is-col-order-relevant="false" are-col-names-relevant="false">
-            <text>Hint: You need to search for all non-anomalous activity that still falls inside that same dangerous corridor. Use the table MISSION_LOGS and in between values.</text>
+            <text>Which &#x60;explorers&#x60; and corresponding &#x60;mission_logs&#x60; have a non-anomalous power_draw that falls between the minimum and maximum power_draw values of anomalous mission logs ?
+
+Hint:
+- Find the anomaly range MIN, MAX 
+- Use a range check &#x2013; BETWEEN 
+- Some dangerous executions were marked as FALSE 
+</text>
             <sql-solution>SELECT m.*,e.name, e.rank 
-FROM MISSION_LOGS m 
-JOIN EXPLORERS e ON m.explorer_id = e.explorer_id
+FROM mission_logs m 
+JOIN explorers e ON m.explorer_id = e.id
 WHERE power_draw BETWEEN  
-    (SELECT MIN(power_draw) FROM MISSION_LOGS WHERE anomalous = TRUE) 
+    (SELECT MIN(power_draw) FROM mission_logs WHERE anomalous = TRUE) 
     AND 
-    (SELECT MAX(power_draw) FROM MISSION_LOGS WHERE anomalous = TRUE) 
+    (SELECT MAX(power_draw) FROM mission_logs WHERE anomalous = TRUE) 
 AND anomalous = FALSE;</sql-solution>
-            <sql-placeholder></sql-placeholder>
+            <sql-placeholder>SELECT m.*,e.name, e.rank 
+FROM mission_logs m 
+JOIN explorers e ON ...</sql-placeholder>
         </select-scene>
         <text-scene>
             <text>Outstanding! You&#x2019;re proving worthy of the Architects&#x2019; knowledge. You learned how to use MIN() and MAX() to define a danger range and apply BETWEEN to find hidden cases. This reveals inconsistencies where data looks safe but actually falls within risky limits.</text>
         </text-scene>
         <text-scene>
-            <text>Here comes the second discovery &#x2014; one execution was not marked as dangerous. This changes everything. The system was pushed past its limit not by three spikes, but by four.</text>
+            <text>Here comes the second discovery, one execution was not marked as dangerous. This changes everything. The system was pushed past its limit not by three spikes, but by four.</text>
         </text-scene>
         <text-scene>
             <text>The relay activated because of the real total load, but only three spikes were recorded. Because of that, the system never fully confirmed the shutdown in its logs.</text>
@@ -264,23 +307,25 @@ AND anomalous = FALSE;</sql-solution>
             <text>Congratulations! You&#x27;ve solved all the puzzles! We hope that, you&#x2019;ve learned how to analyze data from multiple angles&#x2014;finding extremes with MIN() and MAX(), filtering specific groups, comparing values with ANY, and working within ranges using BETWEEN.</text>
         </text-scene>
     </scenes>
-    <initial-sql-script>CREATE TABLE EXPLORERS (
-    explorer_id INT PRIMARY KEY,
-    name VARCHAR(50),
-    age INT,
-    rank VARCHAR(30),
-    join_date DATE
+    <initial-sql-script>create table explorers (
+    id int primary key,
+    name varchar(50),
+    age int,
+    rank varchar(30),
+    join_date date
 );
 
-CREATE TABLE MISSION_LOGS ( 
-  log_id INT PRIMARY KEY, 
-  explorer_id INT, 
-  mission_date DATE, 
-  power_draw INT, anomalous BOOLEAN, 
-  FOREIGN KEY (explorer_id) REFERENCES EXPLORERS(explorer_id) );
+create table mission_logs ( 
+  log_id int primary key, 
+  explorer_id int, 
+  mission_date date, 
+  power_draw int, 
+  anomalous boolean, 
+  foreign key (explorer_id) references explorers(id)
+);
 
 
-INSERT INTO EXPLORERS VALUES
+insert into explorers values
 (1,&#x27;Arin Stone&#x27;,22,&#x27;Apprentice&#x27;,&#x27;2023-05-12&#x27;),
 (2,&#x27;Lyra Windfall&#x27;,31,&#x27;Scout&#x27;,&#x27;2021-03-08&#x27;),
 (3,&#x27;Darius Flint&#x27;,45,&#x27;Architect&#x27;,&#x27;2015-07-21&#x27;),
@@ -325,7 +370,7 @@ INSERT INTO EXPLORERS VALUES
 (42,&#x27;Iris Coldblood&#x27;,35,&#x27;Navigator&#x27;,&#x27;2005-04-22&#x27;);
 
 
-INSERT INTO MISSION_LOGS (log_id, explorer_id, mission_date, power_draw, anomalous) VALUES 
+insert into mission_logs (log_id, explorer_id, mission_date, power_draw, anomalous) values 
 (1, 2, CURRENT_DATE, 120, FALSE), 
 (2, 3, CURRENT_DATE, 180, FALSE), 
 (3, 4, CURRENT_DATE, 140, FALSE), 
@@ -342,5 +387,6 @@ INSERT INTO MISSION_LOGS (log_id, explorer_id, mission_date, power_draw, anomalo
 (14, 8, CURRENT_DATE, 650, TRUE), 
 (15, 14, CURRENT_DATE, 290, FALSE), 
 (16, 8, CURRENT_DATE, 610, FALSE), 
-(17, 30, CURRENT_DATE, 560, TRUE);</initial-sql-script>
+(17, 30, CURRENT_DATE, 560, TRUE);
+</initial-sql-script>
 </game>
